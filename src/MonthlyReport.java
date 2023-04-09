@@ -9,6 +9,8 @@ import java.util.List;
 public class MonthlyReport {
     ArrayList<Statistics> statisticsArrayList = new ArrayList<>();
     HashMap<Integer, Integer> monthlyReport = new HashMap<>();
+    HashMap<Integer, Integer> onlyMonthlyExpenses = new HashMap<>();
+    HashMap<Integer, Integer> onlyMonthlyIncome = new HashMap<>();
     public int numberMonth = 12;
 
     public void constructorOfPath(){
@@ -49,6 +51,25 @@ public class MonthlyReport {
             }
         }
         System.out.println(monthlyReport);
+    }
+
+    public void onlyMonthlyExpenses(){
+        for (Statistics statistics : statisticsArrayList) {
+            int sum = statistics.quantity * statistics.sumOfOne;
+            if (statistics.isExpense) {
+                onlyMonthlyExpenses.put(statistics.month, onlyMonthlyExpenses.getOrDefault(statistics.month, 0) + sum);
+            }
+        }
+        System.out.println(onlyMonthlyExpenses);
+    }
+    public void onlyMonthlyIncome(){
+        for (Statistics statistics : statisticsArrayList) {
+            int sum = statistics.quantity * statistics.sumOfOne;
+            if (!statistics.isExpense) {
+                onlyMonthlyIncome.put(statistics.month, onlyMonthlyIncome.getOrDefault(statistics.month, 0) + sum);
+            }
+        }
+        System.out.println(onlyMonthlyIncome);
     }
 
 

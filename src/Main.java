@@ -19,6 +19,8 @@ public class Main {
                 case 1:
                     monthlyReport.constructorOfPath();
                     monthlyReport.getMonthlyReport();
+                    monthlyReport.onlyMonthlyExpenses();
+                    monthlyReport.onlyMonthlyIncome();
                     break;
                 case 2:
                     yearlyReport.getYearlyReport();
