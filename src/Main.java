@@ -5,6 +5,9 @@ public class Main {
     public static void main(String[] args) {
         // Поехали!
         Scanner scanner = new Scanner(System.in);
+        YearlyReport yearlyReport = new YearlyReport("resources/y.2021.csv");
+        MonthlyReport monthlyReport = new MonthlyReport();
+
 
         printMenu();
 
@@ -14,9 +17,12 @@ public class Main {
                 case 0:
                     return;
                 case 1:
-                    System.out.println("Вы ввели неверное значение!");
+                    monthlyReport.constructorOfPath();
+                    monthlyReport.getMonthlyReport();
                     break;
                 case 2:
+                    yearlyReport.getYearlyReport();
+                    System.out.println(yearlyReport.sumYearlyReport());
                     break;
                 case 3:
                     break;
