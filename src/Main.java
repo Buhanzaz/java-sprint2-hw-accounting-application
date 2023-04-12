@@ -13,6 +13,7 @@ public class Main {
             printMenu();
             System.out.println();
             int command = scanner.nextInt();
+            System.out.println();
             switch (command) {
                 case 0:
                     return;
@@ -29,10 +30,11 @@ public class Main {
                     break;
                 case 4:
                     monthlyReport.getStatisticMonth();
+                    System.out.println();
                     break;
                 case 5:
-                    System.out.println(yearlyReport.averageExpensesAndIncome(false)); // income
-                    System.out.println(yearlyReport.averageExpensesAndIncome(true)); // expense
+                    yearlyReport.ProfitOfMouth();
+                    System.out.println();
                     break;
                 default:
                     System.out.println("Вы ввели неверное значение!");

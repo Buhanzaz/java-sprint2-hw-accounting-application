@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class Checker {
     public MonthlyReport monthlyReport;
     public YearlyReport yearlyReport;
+    private boolean check = true;
 
     public Checker(MonthlyReport monthlyReport, YearlyReport yearlyReport) {
         this.monthlyReport = monthlyReport;
@@ -10,7 +11,6 @@ public class Checker {
     }
 
     public boolean check(){
-        boolean check = true;
 
         HashMap<Integer, HashMap<Boolean, Integer>> monthStatistic = new HashMap<>();
         for (Statistics statistics : monthlyReport.monthStatistic) {
@@ -57,7 +57,7 @@ public class Checker {
                 }
             }
         }
-        if (check) System.out.println("Отчеты прошли проверку!");
+        if (check) System.out.println("Отчеты прошли проверку!\n");
         return check;
     }
 }

@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-// Поменять название переменных и сенить хеш мапы на массивы
 
 public class MonthlyReport {
     public int numberMonth = 3;
@@ -71,14 +70,20 @@ public class MonthlyReport {
         return maxOrMin;
     }
 
+
     public void getStatisticMonth() {
         System.out.println("Информация о всех месячных отчётах\n");
         for (int month = 1; month <= numberMonth; month++) {
             System.out.println(nameMonth(month));
-            System.out.println("Самая большая прибыль: " + maxIncomeItem(month));
-            System.out.println("Самая большая трата: " + minIncomeItem(month) +"\n");
+            for (String nameItem : maxIncomeItem(month).keySet()) {
+                System.out.println("Самая большая прибыль: " + nameItem + " - "+ maxIncomeItem(month).get(nameItem));
+            }
+            for (String nameItem : minIncomeItem(month).keySet()) {
+                System.out.println("Самая большая прибыль: " + nameItem + " - "+ minIncomeItem(month).get(nameItem) + "\n");
+            }
         }
     }
+
 
     public String nameMonth(int numberMonth) {
         String nameMonth = null;
