@@ -1,81 +1,100 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+// Поменять название переменных и сенить хеш мапы на массивы
 
 public class MonthlyReport {
-    ArrayList<Statistics> statisticsArrayList = new ArrayList<>();
-    HashMap<Integer, Integer> monthlyReport = new HashMap<>();
-    HashMap<Integer, Integer> onlyMonthlyExpenses = new HashMap<>();
-    HashMap<Integer, Integer> onlyMonthlyIncome = new HashMap<>();
-    public int numberMonth = 12;
+    public ArrayList<Statistics> monthStatistic = new ArrayList<>();
+    String[] monthly = {"January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"};
 
-    public void constructorOfPath(){
-        for (int i = 1; i <= numberMonth; i++) {
-            if (i < 10) {
-                List<String> content = readFileContents("resources/m.20210" + i + ".csv");
-                reportConversion(content, i);
-            } else {
-                List<String> content = readFileContents("resources/m.2021" + i + ".csv");
-                reportConversion(content, i);
-            }
-
-        }
-    }
-
-    public void reportConversion(List<String> content, int month){
-        for (int j = 1; j < content.size(); j++) {
-            String line = content.get(j);
+    public void loadMonthlyReport(int month, String path) {
+        List<String> content = readFileContents(path);
+        for (int i = 1; i < content.size(); i++) {
+            String line = content.get(i);
             String[] parts = line.split(",");
-            String item_name = parts[0];
+            String itemName = parts[0];
             boolean isExpense = Boolean.parseBoolean(parts[1]);
             int quantity = Integer.parseInt(parts[2]);
             int sumOfOne = Integer.parseInt(parts[3]);
 
-            Statistics statistics = new Statistics(month, item_name, isExpense, quantity, sumOfOne);
-            statisticsArrayList.add(statistics);
+            Statistics statistics = new Statistics(month, itemName, isExpense, quantity, sumOfOne);
+            monthStatistic.add(statistics);
         }
     }
 
-    public void getMonthlyReport(){
+    public String maxIncomeItem(int month){
+        HashMap<String, Integer> incomeItems = new HashMap<>();
+        for (Statistics statistics : monthStatistic) {
+            if (statistics.month == month){
+                if (!statistics.isExpense) {
+                    int income = statistics.sumOfOne * statistics.quantity;
+                    incomeItems.put(statistics.itemName, incomeItems.getOrDefault(statistics.itemName, 0) + income);
+                }
+            }
 
-        for (Statistics statistics : statisticsArrayList) {
-            int sum = statistics.quantity * statistics.sumOfOne;
-            if (statistics.isExpense) {
-                monthlyReport.put(statistics.month, monthlyReport.getOrDefault(statistics.month, 0) - sum);
-            } else {
-                monthlyReport.put(statistics.month, monthlyReport.getOrDefault(statistics.month, 0) + sum);
+        }
+        String maxNameItem = null;
+        for (String nameItem : incomeItems.keySet()) {
+            if (maxNameItem == null){
+                maxNameItem = nameItem;
+                continue;
+            }
+            if (incomeItems.get(maxNameItem) < incomeItems.get(nameItem)){
+                maxNameItem = nameItem;
             }
         }
-        System.out.println(monthlyReport);
+        return maxNameItem;
     }
 
-    public void onlyMonthlyExpenses(){
-        for (Statistics statistics : statisticsArrayList) {
-            int sum = statistics.quantity * statistics.sumOfOne;
-            if (statistics.isExpense) {
-                onlyMonthlyExpenses.put(statistics.month, onlyMonthlyExpenses.getOrDefault(statistics.month, 0) + sum);
+    public HashMap<String, Integer> minIncomeItem(int month){
+        HashMap<String, Integer> extendItems = new HashMap<>();
+        for (Statistics statistics : monthStatistic) {
+            if (statistics.month == month){
+                if (statistics.isExpense) {
+                    int income = statistics.sumOfOne * statistics.quantity;
+                    extendItems.put(statistics.itemName, extendItems.getOrDefault(statistics.itemName, 0) + income);
+                }
             }
         }
-        System.out.println(onlyMonthlyExpenses);
-    }
-    public void onlyMonthlyIncome(){
-        for (Statistics statistics : statisticsArrayList) {
-            int sum = statistics.quantity * statistics.sumOfOne;
-            if (!statistics.isExpense) {
-                onlyMonthlyIncome.put(statistics.month, onlyMonthlyIncome.getOrDefault(statistics.month, 0) + sum);
+
+        HashMap<String, Integer> min = new HashMap<>();
+        String minNameItem = null;
+        for (String nameItem : extendItems.keySet()) {
+            if (minNameItem == null){
+                minNameItem = nameItem;
+                continue;
+            }
+            if (extendItems.get(minNameItem) < extendItems.get(nameItem)){
+                minNameItem = nameItem;
             }
         }
-        System.out.println(onlyMonthlyIncome);
+        min.put(minNameItem, extendItems.get(minNameItem));
+        return min;
     }
 
+    public void getStatisticMonth() {
+        for (int month = 1; month <= 3; month++) {
 
 
 
+            loadMonthlyReport(month, "resources/m.20210"+ month + ".csv");
+            System.out.println("Информация о всех месячных отчётах");
+            System.out.println(nameMonth(month));
+            System.out.println("Самый прибыльный товар: " + maxIncomeItem(month));
+        }
+    }
 
+    public String nameMonth(int numberMonth) {
+        String nameMonth = null;
+        for (int i = 0; i <= monthly.length; i++) {
+            if (numberMonth == (i + 1)) {
+                nameMonth = monthly[i];
+            }
+        }
+        return nameMonth;
+    }
     List<String> readFileContents(String path) {
         try {
             return Files.readAllLines(Path.of(path));

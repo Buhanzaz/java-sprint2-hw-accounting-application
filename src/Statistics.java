@@ -1,11 +1,8 @@
 public class Statistics {
-    public Integer month;
-    public String monthName;
-    public Integer amount;
+    public Integer month, amount, quantity, sumOfOne;
     public String itemName;
     public Boolean isExpense;
-    public Integer quantity;
-    public Integer sumOfOne;
+
 
     //public String[] monthly = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
@@ -16,20 +13,22 @@ public class Statistics {
         //convertMonth();
     }
 
-    public Statistics(Integer month, String itemName, Boolean isExpense, Integer quantity, Integer sumOfOne) {
-        this.month = month;
+    public Statistics(Integer month,String itemName, Boolean isExpense, Integer quantity, Integer sumOfOne) {
+        this.month =month;
         this.itemName = itemName;
         this.isExpense = isExpense;
         this.quantity = quantity;
         this.sumOfOne = sumOfOne;
     }
 
-//    public void convertMonth() {
-//        for (int i = 0; i < monthly.length; i++)
-//            if (month == (i + 1)){
-//                monthName = monthly[i];
-//            }
-//
-//    }
+/*
+    public void convertMonth() {
+        for (int i = 0; i < monthly.length; i++)
+            if (month == (i + 1)){
+                monthName = monthly[i];
+            }
+
+    }
+*/
 }
 

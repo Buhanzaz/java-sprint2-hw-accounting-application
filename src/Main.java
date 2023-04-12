@@ -8,27 +8,29 @@ public class Main {
         YearlyReport yearlyReport = new YearlyReport("resources/y.2021.csv");
         MonthlyReport monthlyReport = new MonthlyReport();
 
-
-        printMenu();
-
         while (true){
+            printMenu();
             int command = scanner.nextInt();
             switch (command) {
                 case 0:
                     return;
                 case 1:
-                    monthlyReport.constructorOfPath();
-                    monthlyReport.getMonthlyReport();
-                    monthlyReport.onlyMonthlyExpenses();
-                    monthlyReport.onlyMonthlyIncome();
+/*
+                    for (int i = 1; i <= 3; i++) {
+                        monthlyReport.loadMonthlyReport(i,"resources/m.20210"+ i + ".csv");
+                        System.out.println("Номер месяца" + i);
+                        System.out.println(monthlyReport.maxIncomeItem(i));
+                    }
+*/
                     break;
                 case 2:
                     yearlyReport.getYearlyReport();
                     System.out.println(yearlyReport.sumYearlyReport());
-                    break;
+                    continue;
                 case 3:
                     break;
                 case 4:
+                    monthlyReport.getStatisticMonth();
                     break;
                 case 5:
                     break;
@@ -36,9 +38,8 @@ public class Main {
                     System.out.println("Вы ввели неверное значение!");
             }
         }
-
-
     }
+
 
     public static void printMenu() {
         System.out.println("1. Считать все месячные отчёты");
