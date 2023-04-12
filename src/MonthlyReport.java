@@ -24,7 +24,7 @@ public class MonthlyReport {
         }
     }
 
-    public String maxIncomeItem(int month){
+    public HashMap<String, Integer> maxIncomeItem(int month){
         HashMap<String, Integer> incomeItems = new HashMap<>();
         for (Statistics statistics : monthStatistic) {
             if (statistics.month == month){
@@ -33,19 +33,8 @@ public class MonthlyReport {
                     incomeItems.put(statistics.itemName, incomeItems.getOrDefault(statistics.itemName, 0) + income);
                 }
             }
-
         }
-        String maxNameItem = null;
-        for (String nameItem : incomeItems.keySet()) {
-            if (maxNameItem == null){
-                maxNameItem = nameItem;
-                continue;
-            }
-            if (incomeItems.get(maxNameItem) < incomeItems.get(nameItem)){
-                maxNameItem = nameItem;
-            }
-        }
-        return maxNameItem;
+        return maxOrMin(incomeItems);
     }
 
     public HashMap<String, Integer> minIncomeItem(int month){
@@ -58,31 +47,32 @@ public class MonthlyReport {
                 }
             }
         }
+        return maxOrMin(extendItems);
+    }
 
-        HashMap<String, Integer> min = new HashMap<>();
-        String minNameItem = null;
-        for (String nameItem : extendItems.keySet()) {
-            if (minNameItem == null){
-                minNameItem = nameItem;
+    public HashMap<String, Integer> maxOrMin(HashMap<String, Integer> map) {
+        HashMap<String, Integer> maxOrMin = new HashMap<>();
+        String NameItem = null;
+        for (String nameItem : map.keySet()) {
+            if (NameItem == null){
+                NameItem = nameItem;
                 continue;
             }
-            if (extendItems.get(minNameItem) < extendItems.get(nameItem)){
-                minNameItem = nameItem;
+            if (map.get(NameItem) < map.get(nameItem)){
+                NameItem = nameItem;
             }
         }
-        min.put(minNameItem, extendItems.get(minNameItem));
-        return min;
+        maxOrMin.put(NameItem, map.get(NameItem));
+        return maxOrMin;
     }
 
     public void getStatisticMonth() {
+        System.out.println("Информация о всех месячных отчётах\n");
         for (int month = 1; month <= 3; month++) {
-
-
-
             loadMonthlyReport(month, "resources/m.20210"+ month + ".csv");
-            System.out.println("Информация о всех месячных отчётах");
             System.out.println(nameMonth(month));
-            System.out.println("Самый прибыльный товар: " + maxIncomeItem(month));
+            System.out.println("Самая большая прибыль: " + maxIncomeItem(month));
+            System.out.println("Самая большая трата: " + minIncomeItem(month) +"\n");
         }
     }
 
@@ -95,6 +85,7 @@ public class MonthlyReport {
         }
         return nameMonth;
     }
+
     List<String> readFileContents(String path) {
         try {
             return Files.readAllLines(Path.of(path));

@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class YearlyReport {
     ArrayList<Statistics> statisticsArrayList = new ArrayList<>();
     HashMap<Integer, Integer> yearReport = new HashMap<>();
     public String path;
+    String year;
 
     public YearlyReport(String path) {
         this.path = path;
