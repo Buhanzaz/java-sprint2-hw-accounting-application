@@ -11,6 +11,7 @@ public class YearlyReport {
     ArrayList<Statistics> yearlyStatistics = new ArrayList<>();
 
 
+    //Loading cvs file and writing object in array list
     public void yearlyReportConversion(int year, String path){
         List<String> content = readFileContents(path);
         for (int i = 1; i < content.size(); i++){
@@ -25,6 +26,7 @@ public class YearlyReport {
         }
     }
 
+    //Output year
     public int getYear() {
         return yearlyStatistics.get(1).year;
     }
@@ -41,6 +43,7 @@ public class YearlyReport {
         return expAndInc;
     }
 
+
     public HashMap<Integer, Integer> averageExpensesAndIncome(boolean value){
         HashMap<Integer, Integer> averageExpensesAndIncome = new HashMap<>();
         for (Integer month : expensesAndIncome().keySet()) {
@@ -54,7 +57,6 @@ public class YearlyReport {
                 }
             }
         }
-
         return averageExpensesAndIncome;
     }
 
