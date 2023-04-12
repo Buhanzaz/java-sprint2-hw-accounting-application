@@ -1,17 +1,15 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class YearlyReport {
-    ArrayList<Statistics> statisticsArrayList = new ArrayList<>();
-    HashMap<Integer, Integer> yearReport = new HashMap<>();
+    ArrayList<Statistics> yearlyStatistics = new ArrayList<>();
+
     public String path;
-    String year;
+
 
     public YearlyReport(String path) {
         this.path = path;
@@ -28,32 +26,11 @@ public class YearlyReport {
             boolean isExpense = Boolean.parseBoolean(parts[2]);
 
             Statistics statistics = new Statistics(month, amount, isExpense);
-            statisticsArrayList.add(statistics);
+            yearlyStatistics.add(statistics);
         }
     }
 
-    public int sumYearlyReport(){
-        int sumYear = 0;
-        for (Integer amount : yearReport.values()){
-            sumYear += amount;
-        }
-        return sumYear;
-    }
 
-    public void getYearlyReport(){
-        // Год
-        // Месяц, Прибыль,
-
-        for (Statistics statistic : statisticsArrayList) {
-            if (statistic.isExpense) {
-                yearReport.put(statistic.month, yearReport.getOrDefault(statistic.month, 0) - statistic.amount);
-            } else {
-                yearReport.put(statistic.month, yearReport.getOrDefault(statistic.month, 0) + statistic.amount);
-            }
-
-        }
-        System.out.println(yearReport);
-    }
 
     List<String> readFileContents(String path) {
         try {

@@ -7,6 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         YearlyReport yearlyReport = new YearlyReport("resources/y.2021.csv");
         MonthlyReport monthlyReport = new MonthlyReport();
+        Checker checker = new Checker(monthlyReport,yearlyReport);
 
         while (true){
             printMenu();
@@ -15,19 +16,14 @@ public class Main {
                 case 0:
                     return;
                 case 1:
-/*
-                    for (int i = 1; i <= 3; i++) {
-                        monthlyReport.loadMonthlyReport(i,"resources/m.20210"+ i + ".csv");
-                        System.out.println("Номер месяца" + i);
-                        System.out.println(monthlyReport.maxIncomeItem(i));
-                    }
-*/
+
+                    System.out.println("Месячные отчеты подсчитаны!");
                     break;
                 case 2:
-                    yearlyReport.getYearlyReport();
-                    System.out.println(yearlyReport.sumYearlyReport());
                     continue;
                 case 3:
+                    //monthlyReport.ss();
+                    checker.check();
                     break;
                 case 4:
                     monthlyReport.getStatisticMonth();
