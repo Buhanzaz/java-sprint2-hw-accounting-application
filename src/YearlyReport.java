@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class YearlyReport {
@@ -23,7 +24,47 @@ public class YearlyReport {
         }
     }
 
+    public HashMap<Integer, HashMap<Boolean, Integer>> expensesAndIncome() {
+        HashMap<Integer, HashMap<Boolean, Integer>> expAndInc = new HashMap<>();
+        for (Statistics statistics : yearlyStatistics) {
+            if (!expAndInc.containsKey(statistics.month)){
+                expAndInc.put(statistics.month, new HashMap<>());
+            }
+            HashMap<Boolean, Integer> statisticToCount = expAndInc.get(statistics.month);
+            statisticToCount.put(statistics.isExpense,
+                    statisticToCount.getOrDefault(statistics.isExpense, 0) + statistics.amount);
+        }
+        return expAndInc;
+    }
 
+    public HashMap<Integer, Integer> averageExpensesAndIncome(boolean value){
+        HashMap<Integer, Integer> averageExpensesAndIncome = new HashMap<>();
+        for (Integer month : expensesAndIncome().keySet()) {
+            HashMap<Boolean, Integer> statisticToCountYear = expensesAndIncome().get(month);
+
+            for (Boolean aBoolean : statisticToCountYear.keySet()) {
+                if (aBoolean == value) {
+                    averageExpensesAndIncome.put(month, averageExpensesAndIncome.getOrDefault(month,0) + statisticToCountYear.get(aBoolean));
+                }
+            }
+        }
+
+        return averageExpensesAndIncome;
+    }
+
+
+    public void averageProfitOfMouth(boolean value){
+        HashMap<Integer, Integer> averageProfitOfMouth = new HashMap<>();
+        for (Integer month : expensesAndIncome().keySet()) {
+            HashMap<Boolean, Integer> statisticToCountYear = expensesAndIncome().get(month);
+
+            for (Boolean aBoolean : statisticToCountYear.keySet()) {
+                if (aBoolean == value) {
+                    averageProfitOfMouth.put(month, averageProfitOfMouth.getOrDefault(month,0) + statisticToCountYear.get(aBoolean));
+                }
+            }
+        }
+    }
 
     List<String> readFileContents(String path) {
         try {

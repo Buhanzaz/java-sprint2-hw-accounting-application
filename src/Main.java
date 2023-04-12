@@ -31,6 +31,8 @@ public class Main {
                     monthlyReport.getStatisticMonth();
                     break;
                 case 5:
+                    System.out.println(yearlyReport.averageExpensesAndIncome(false)); // income
+                    System.out.println(yearlyReport.averageExpensesAndIncome(true)); // expense
                     break;
                 default:
                     System.out.println("Вы ввели неверное значение!");
