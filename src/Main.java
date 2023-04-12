@@ -5,24 +5,26 @@ public class Main {
     public static void main(String[] args) {
         // Поехали!
         Scanner scanner = new Scanner(System.in);
-        YearlyReport yearlyReport = new YearlyReport("resources/y.2021.csv");
+        YearlyReport yearlyReport = new YearlyReport();
         MonthlyReport monthlyReport = new MonthlyReport();
         Checker checker = new Checker(monthlyReport,yearlyReport);
 
         while (true){
             printMenu();
+            System.out.println();
             int command = scanner.nextInt();
             switch (command) {
                 case 0:
                     return;
                 case 1:
-
-                    System.out.println("Месячные отчеты подсчитаны!");
+                    monthlyReport.reportCount();
+                    System.out.println("Месячные отчеты подсчитаны!\n");
                     break;
                 case 2:
+                    yearlyReport.yearlyReportConversion(2021,"resources/y.2021.csv" );
+                    System.out.println("Годовой отчет подсчитан!\n");
                     continue;
                 case 3:
-                    //monthlyReport.ss();
                     checker.check();
                     break;
                 case 4:

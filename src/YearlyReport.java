@@ -8,15 +8,8 @@ import java.util.List;
 public class YearlyReport {
     ArrayList<Statistics> yearlyStatistics = new ArrayList<>();
 
-    public String path;
 
-
-    public YearlyReport(String path) {
-        this.path = path;
-        reportConversion();
-    }
-
-    public void reportConversion(){
+    public void yearlyReportConversion(int year, String path){
         List<String> content = readFileContents(path);
         for (int i = 1; i < content.size(); i++){
             String line = content.get(i);

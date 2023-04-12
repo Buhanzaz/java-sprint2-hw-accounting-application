@@ -28,7 +28,8 @@ public class Checker {
                 yearStatistic.put(statistics.month, new HashMap<>());
             }
             HashMap<Boolean, Integer> statisticToCount = yearStatistic.get(statistics.month);
-            statisticToCount.put(statistics.isExpense, statisticToCount.getOrDefault(statistics.isExpense, 0) + statistics.amount);
+            statisticToCount.put(statistics.isExpense,
+                    statisticToCount.getOrDefault(statistics.isExpense, 0) + statistics.amount);
         }
 
         for (Integer month : yearStatistic.keySet()) {
@@ -41,14 +42,22 @@ public class Checker {
                 int countByMonth = statisticToCountMonth.getOrDefault(aBoolean, 0);
 
                 if (countByYear != countByMonth) {
-                    System.out.println("Ошибка");
+                    System.out.println("Ошибка!");
+                    System.out.println("В месяце " + month);
+                    if (aBoolean) {
+                        System.out.println("Не совпадают траты");
+                    } else {
+                        System.out.println("Не совпадают доходы");
+                    }
+                    System.out.println("Данные годового отчета: " + countByYear);
+                    System.out.println("Данные месячного отчета: " + countByMonth);
                     check = false;
                 } else {
-                    System.out.println("Ошибок нет");
                     check = true;
                 }
             }
         }
+        if (check) System.out.println("Отчеты прошли проверку!");
         return check;
     }
 }

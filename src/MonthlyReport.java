@@ -5,11 +5,16 @@ import java.util.*;
 // Поменять название переменных и сенить хеш мапы на массивы
 
 public class MonthlyReport {
+    public int numberMonth = 3;
     public ArrayList<Statistics> monthStatistic = new ArrayList<>();
-    String[] monthly = {"January", "February", "March", "April", "May", "June", "July",
-            "August", "September", "October", "November", "December"};
-
-    public void loadMonthlyReport(int month, String path) {
+    String[] monthly = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+            "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+    public void reportCount(){
+        for (int month = 1; month <= numberMonth; month++) {
+            monthlyReportConversion(month, "resources/m.20210" + month + ".csv");
+        }
+    }
+    public void monthlyReportConversion(int month, String path) {
         List<String> content = readFileContents(path);
         for (int i = 1; i < content.size(); i++) {
             String line = content.get(i);
@@ -68,8 +73,7 @@ public class MonthlyReport {
 
     public void getStatisticMonth() {
         System.out.println("Информация о всех месячных отчётах\n");
-        for (int month = 1; month <= 3; month++) {
-            loadMonthlyReport(month, "resources/m.20210"+ month + ".csv");
+        for (int month = 1; month <= numberMonth; month++) {
             System.out.println(nameMonth(month));
             System.out.println("Самая большая прибыль: " + maxIncomeItem(month));
             System.out.println("Самая большая трата: " + minIncomeItem(month) +"\n");
