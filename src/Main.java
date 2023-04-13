@@ -18,26 +18,52 @@ public class Main {
                 case 0:
                     return;
                 case 1:
+                    monthlyReport.clear();
                     monthlyReport.reportCount();
                     System.out.println("Месячные отчеты подсчитаны!\n");
                     break;
                 case 2:
+                    yearlyReport.clear();
                     yearlyReport.yearlyReportConversion(2021,"resources/y.2021.csv" );
                     System.out.println("Годовой отчет подсчитан!\n");
                     continue;
                 case 3:
-                    checker.check();
+                    if (monthlyReport.checkUseMonthly & yearlyReport.checkUseYearly) {
+                        checker.check();
+                    } else if (monthlyReport.checkUseMonthly | yearlyReport.checkUseYearly) {
+                        if (!monthlyReport.checkUseMonthly){
+                            System.out.println("Ошибка!");
+                            System.out.println("Вы не сосчитали все месячные отчеты!\n");
+                        }
+                        if (!yearlyReport.checkUseYearly){
+                            System.out.println("Ошибка!");
+                            System.out.println("Вы не сосчитали годовой отчет!\n");
+                        }
+                    } else {
+                        System.out.println("Ошибка!");
+                        System.out.println("Вы не сосчитали месячные и годовой отчет!\n");
+                    }
                     break;
                 case 4:
-                    monthlyReport.getStatisticMonth();
-                    System.out.println();
+                    if (monthlyReport.checkUseMonthly) {
+                        monthlyReport.getStatisticMonth();
+                        System.out.println();
+                    } else {
+                        System.out.println("Ошибка!");
+                        System.out.println("Вы не сосчитали все месячные отчеты!\n");
+                    }
                     break;
                 case 5:
-                    yearlyReport.ProfitOfMouth();
-                    System.out.println();
+                    if (yearlyReport.checkUseYearly) {
+                        yearlyReport.ProfitOfMouth();
+                        System.out.println();
+                    } else {
+                        System.out.println("Ошибка!");
+                        System.out.println("Вы не сосчитали годовой отчет!\n");
+                    }
                     break;
                 default:
-                    System.out.println("Вы ввели неверное значение!");
+                    System.out.println("Вы ввели неверное значение!\n");
             }
         }
     }

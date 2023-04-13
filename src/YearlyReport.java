@@ -10,7 +10,10 @@ public class YearlyReport {
     MonthlyReport monthlyReport = new MonthlyReport();
     ArrayList<Statistics> yearlyStatistics = new ArrayList<>();
 
-
+    protected boolean checkUseYearly = false;
+    public void clear(){
+        yearlyStatistics.clear();
+    }
     //Loading cvs file and writing object in array list
     public void yearlyReportConversion(int year, String path){
         List<String> content = readFileContents(path);
@@ -24,6 +27,7 @@ public class YearlyReport {
             Statistics statistics = new Statistics(year, month, amount, isExpense);
             yearlyStatistics.add(statistics);
         }
+        checkUseYearly = true;
     }
 
     //Output year
@@ -60,26 +64,20 @@ public class YearlyReport {
         return averageExpensesAndIncome;
     }
 
-    public void averageIncome(){
-        int allIncome = 0;
-        int monthInYear = averageExpensesAndIncome(false).size();
-        for (Integer month : averageExpensesAndIncome(false).keySet()) {
-            allIncome += averageExpensesAndIncome(false).get(month);
+    public void averageCount(boolean value){
+        HashMap<Integer, Integer> mapAverageCount = averageExpensesAndIncome(value);
+        int allIncomeOrExpense = 0;
+        int monthInYear = mapAverageCount.size();
+        for (Integer month : mapAverageCount.keySet()) {
+            allIncomeOrExpense += mapAverageCount.get(month);
         }
-        int averageIncome = allIncome / monthInYear;
-        System.out.println("Средний доход за: " + monthInYear + " месяца " + averageIncome);
-    }
-
-    public void averageExpense(){
-        int allExpense = 0;
-        int monthInYear = averageExpensesAndIncome(true).size();
-        for (Integer month : averageExpensesAndIncome(true).keySet()) {
-            allExpense += averageExpensesAndIncome(true).get(month);
+        int averageIncomeOrExpense = allIncomeOrExpense / monthInYear;
+        if (value) {
+            System.out.println("Средняя трата за: " + monthInYear + " месяца " + averageIncomeOrExpense);
+        } else {
+            System.out.println("Средний доход за: " + monthInYear + " месяца " + averageIncomeOrExpense);
         }
-        int averageExpense = allExpense / monthInYear;
-        System.out.println("Средний доход за: " + monthInYear + " месяца " + averageExpense);
     }
-
     public void ProfitOfMouth(){
         System.out.println(getYear());
         for (Integer monthIncome : averageExpensesAndIncome(false).keySet()) {
@@ -89,8 +87,8 @@ public class YearlyReport {
             System.out.println("Прибыль: " + profit + "\n");
         }
         System.out.println();
-        averageIncome();
-        averageExpense();
+        averageCount(false);
+        averageCount(true);
     }
 
     List<String> readFileContents(String path) {
@@ -102,5 +100,4 @@ public class YearlyReport {
             return Collections.emptyList();
         }
     }
-
 }
