@@ -1,10 +1,4 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class YearlyReport {
     MonthlyReport monthlyReport = new MonthlyReport();
@@ -16,7 +10,8 @@ public class YearlyReport {
     }
     //Loading cvs file and writing object in array list
     public void yearlyReportConversion(int year, String path){
-        List<String> content = readFileContents(path);
+        ReadFile readFile = new ReadFile();
+        List<String> content = readFile.readFileContents(path);
         for (int i = 1; i < content.size(); i++){
             String line = content.get(i);
             String[] parts = line.split(",");
@@ -89,15 +84,5 @@ public class YearlyReport {
         System.out.println();
         averageCount(false);
         averageCount(true);
-    }
-
-    List<String> readFileContents(String path) {
-        try {
-            return Files.readAllLines(Path.of(path));
-        } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл с месячным отчётом. " +
-                    "Возможно файл не находится в нужной директории.");
-            return Collections.emptyList();
-        }
     }
 }
