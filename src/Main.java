@@ -31,6 +31,7 @@ public class Main {
                     if (monthlyReport.checkUseMonthly & yearlyReport.checkUseYearly) {
                         checker.check();
                     } else if (monthlyReport.checkUseMonthly | yearlyReport.checkUseYearly) {
+
                         if (!monthlyReport.checkUseMonthly){
                             System.out.println("Ошибка!");
                             System.out.println("Вы не сосчитали все месячные отчеты!\n");

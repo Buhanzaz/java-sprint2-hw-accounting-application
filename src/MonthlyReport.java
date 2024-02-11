@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MonthlyReport {
     public int numberMonth = 3;
-    public ArrayList<Statistics> monthStatistic = new ArrayList<>();
+    public List<Statistics> monthStatistic = new ArrayList<>();
     protected boolean checkUseMonthly = false;
     String[] nameMonths = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
             "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
